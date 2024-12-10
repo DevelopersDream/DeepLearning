@@ -1,5 +1,6 @@
 import utils as u
-
+import constants as c
+import os
 
 def compute_init_dataset_stats(data: list) -> dict:
     """
@@ -44,11 +45,11 @@ def compute_final_dataset_stats(dataset_statistics: list, doc_list: list) -> lis
     return dataset_statistics
 
 
-def data_proc_cleaning() -> list:
+def wiki_data_processing() -> list:
 
     """" load data from the data folder, process and clean it. Then return a list of documents for fine-tuning"""
 
-    data = u.one_json()
+    data = u.one_json(c.SCN_JSON_PATH)
 
     discard_ids = {"1", "5604", "5605"} #not sicilian and only number documents
 
@@ -78,3 +79,16 @@ def data_proc_cleaning() -> list:
     print(dataset_statistics)
 
     return doc_list
+
+
+def books_data_processing() -> list:
+
+    data = []
+
+    files = os.listdir(c.SCN_BOOKS_PATH)
+
+    for file in files:
+        with open(c.SCN_BOOKS_PATH + file, "r", encoding="utf-8", errors="replace") as file:
+            data.append(file.read())    
+
+    return data
