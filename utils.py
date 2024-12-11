@@ -17,8 +17,8 @@ def one_json(dir) -> list:
     return data
 
 
-def unique_characters(my_data):
-    """print out unique characters besides letters and numbers in a string """
+def unique_characters(my_data) -> set:
+    """return a set of unique characters besides letters and numbers in a string """
 
     unique_chars = set()
 
@@ -28,4 +28,4 @@ def unique_characters(my_data):
             if not char.isalnum():
                 unique_chars.add(char)
 
-    print(unique_chars)
+    return unique_chars
