@@ -1,88 +1,56 @@
 import utils as u
 import constants as c
+import dataset_statistics as dstat
+import plots as p
 import os, string, re
-
-def compute_init_dataset_stats(data: list) -> dict:
-    """
-    compute statistics for the initial dataset
-
-    """
-    dataset_statistics = {}
-    dataset_statistics["initial_documents"] = len(data) * 2  # 1 title and 1 text
-    dataset_statistics["initial_textWords_average"] = sum(
-        len(elem["text"].split()) for elem in data
-    ) / len(data)
-    dataset_statistics["initial_text_maxWordsNum"] = max(
-        len(elem["text"].split()) for elem in data
-    )
-    dataset_statistics["initial_text_nullPerc"] = (
-        sum(1 for d in data if len(d.get("text", "")) == 0) * 100 / len(data)
-    )
-    dataset_statistics["initial_titleWords_average"] = sum(
-        len(elem["title"].split()) for elem in data
-    ) / len(data)
-    dataset_statistics["initial_title_maxWordsNum"] = max(
-        len(elem["title"].split()) for elem in data
-    )
-    dataset_statistics["initial_title_nullPerc"] = (
-        sum(1 for d in data if len(d.get("title", "")) == 0) * 100 / len(data)
-    )
-    return dataset_statistics
-
-def compute_final_dataset_stats(dataset_statistics: list, doc_list: list) -> list:
-    """
-    compute statistics for the processed dataset
-
-    """
-    dataset_statistics["final_documents"] = len(doc_list)
-    dataset_statistics["final_textWords_average"] = sum(len(elem.split()) for elem in doc_list) / len(doc_list)
-    dataset_statistics["final_text_maxWordsNum"] = max(len(elem.split()) for elem in doc_list)
-    dataset_statistics["final_text_unigrams"] = sum(1 for elem in doc_list if elem.count(" ") == 0)
-    dataset_statistics["final_text_bigrams"] = sum(1 for elem in doc_list if elem.count(" ") == 1)
-    dataset_statistics["final_text_trigrams"] = sum(1 for elem in doc_list if elem.count(" ") == 2)
-    dataset_statistics["final_text_longer_tengrams"] = sum(1 for elem in doc_list if elem.count(" ") >9)
-
-    return dataset_statistics
-
 
 def wiki_data_processing() -> list:
 
-    """" load data from the data folder, process and clean it. Then return a list of documents for fine-tuning"""
+    """" load data in the form of JSON documents from the data folder, process and clean it. Then return a list of documents for fine-tuning"""
 
-    data = u.one_json(c.SCN_JSON_PATH)
+    dataset_name = 'Wikipedia'
 
-    discard_ids = {"1", "5604", "5605"} #not sicilian and only number documents
+    data = u.one_json(c.SCN_WIKIPEDIA_PATH)
+
+    # not sicilian and only number documents
+    discard_ids = {"1", "5604", "5605"} 
 
     data = [d for d in data if d.get("id") not in discard_ids]
 
-    dataset_statistics = compute_init_dataset_stats(data)
+    dataset_statistics = dstat.compute_init_wiki_stats(data)
 
     doc_list = []
 
-    for elem in data: #data pre-processing and cleaning
+    for elem in data:
 
-        doc_list.append([elem["title"].lower()])  # no /n in titles, converting the single string in a list
+        doc_list.append([elem["title"].lower()]) 
 
         if elem["text"] != "":
 
-            if elem["text"].count(" ") < 512: # 512 tokens
-                doc_list.append(elem["text"].lower().split("\n")) # a different document for every /n
+            # 512 tokens is the chosen max length
+            if elem["text"].count(" ") < 512:
+                # a different document for every /n
+                doc_list.append(elem["text"].lower().split("\n"))
             else:
-                doc_list.append(elem["text"].lower().split(".")) # a different document for every .
+                # a different document for every dot
+                doc_list.append(elem["text"].lower().split("."))
 
-    doc_list = [item for sublist in doc_list for item in sublist] #list of lists -> list
+    doc_list = [item.capitalize() for sublist in doc_list for item in sublist]
 
     del data
 
-    dataset_statistics = compute_final_dataset_stats(dataset_statistics, doc_list)
+    dataset_statistics = dstat.compute_final_documents_stats(doc_list = doc_list,dataset_statistics = dataset_statistics, dataset_name=dataset_name)
 
-    print(dataset_statistics)
+    p.token_distribution(doc_list, dataset_name)
 
     return doc_list
 
-
 def books_data_processing() -> list:
 
+    """" load books in TXT format, remove all the characters besides punctuaction and alphanumerics, format
+    them in paragraphs and return them into a list of strings"""
+
+    dataset_name = "books"
     data = []
 
     files = os.listdir(c.SCN_BOOKS_PATH)
@@ -96,11 +64,14 @@ def books_data_processing() -> list:
         with open(c.SCN_BOOKS_PATH + file, "r", encoding="utf-8", errors="replace") as file:
             data.append(file.read())   
 
+    dataset_statistics = dstat.compute_init_books_stats(data)
+
     characters_to_keep = string.punctuation + " \n«»"
 
-    for char in "}{)(=][_~-/*@\^|+":
+    #characters that will be removed
+    for char in "}{)(=][_~-/*@\^|+<>":
 
-        characters_to_keep = characters_to_keep.replace(char, "") #the characters to keep
+        characters_to_keep = characters_to_keep.replace(char, "")
 
     # Vangelo special case
     if vangelo_pos is not None:
@@ -110,25 +81,62 @@ def books_data_processing() -> list:
         # remove numbers
         vangelo_text = "".join(char for char in vangelo_text if not char.isnumeric())
 
-        # each paragtraph is divided by "CAP. " in this book
+        # each paragraph is divided by "CAP. " in this book
         vangelo_text = vangelo_text.replace("CAP.", "ENDPARAGRAPH")
 
         data[vangelo_pos] = vangelo_text
 
     clean_data = []
+    doc_list = []
 
     for input_string in data:
 
         # keep only selected characters and alphanumerics
         clean_data.append("".join(char for char in input_string if char in characters_to_keep or char.isalnum()))
 
+        # substitute \n character with blank spaces.
+        clean_data[-1] = clean_data[-1].replace("\n"," ")
+
         # remove multiple blank spaces
-        clean_data[-1] = " ".join(clean_data[-1].split(" "))
+        clean_data[-1] = re.sub(r"\s{2,}", " ", clean_data[-1])
 
-        # remove eventual initial blank space in each line.
-        clean_data[-1] = "\n".join(line.lstrip() for line in clean_data[-1].splitlines())
+        # divide the books in paragraphs after each dot, excluding multiple subsequent dots
+        clean_data[-1] = clean_data[-1].replace(". ", ".ENDPARAGRAPH")
 
-        # divide the books in paragraphs or meaningful sentences
-        clean_data[-1] = re.sub(r"\n{2,}", "ENDPARAGRAPH", clean_data[-1])
+        # split in paragraphs
+        doc_list.append(clean_data[-1].split("ENDPARAGRAPH"))
 
-    return clean_data
+    del data, clean_data
+
+    new_doc_list = []
+
+    for book in doc_list:
+        for paragraph in book:
+
+            # at least 4 characters
+            if len(paragraph) > 3:
+
+                if paragraph[0] == " ":
+                    new_doc_list.append(paragraph[1:].capitalize())
+                else:
+                    new_doc_list.append(paragraph.capitalize())
+
+    del doc_list
+
+    dataset_statistics = dstat.compute_final_documents_stats(doc_list = new_doc_list, dataset_statistics = dataset_statistics, dataset_name=dataset_name)
+
+    p.token_distribution(new_doc_list, dataset_name)
+
+    return new_doc_list
+
+def full_data_processing() -> list:
+
+    data = wiki_data_processing()
+
+    data.extend(books_data_processing())
+
+    p.token_distribution(data,"full data")
+
+    dstat.compute_final_documents_stats(data,dataset_name='"full data"')
+
+    return data

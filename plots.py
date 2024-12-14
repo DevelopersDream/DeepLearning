@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import Counter
+import constants as c
+import os
 
-def token_distribution(data):
+def token_distribution(data:list, data_name:str):
 
     """ plot the distribution of the documents per number of tokens (5 token bins)"""
+
+    data_name = " for " + data_name
 
     word_counts = [len(s.split()) for s in data]
 
@@ -13,8 +16,10 @@ def token_distribution(data):
 
     hist, bins = np.histogram(word_counts, bins=bin_edges)
 
+    plt.figure()
     plt.bar(bins[:-1], hist, width=5, edgecolor="black", align="edge")
     plt.xlabel("Number of tokens per String")
     plt.ylabel("Number of documents")
-    plt.title("Distribution of tokens per documents")
-    plt.show()
+    plt.title(f"Distribution of tokens per documents{data_name}")
+    plt.savefig(os.path.join(c.IMAGES_PATH, data_name[5:] + " token distribution"))
+    plt.close()
