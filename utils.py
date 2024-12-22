@@ -1,5 +1,6 @@
-import os, json
+import os, json, csv, random
 
+import pandas as pd
 
 def one_json(dir) -> list:
     """
@@ -29,3 +30,18 @@ def unique_characters(my_data) -> set:
                 unique_chars.add(char)
 
     return unique_chars
+
+
+def list_to_csv(file_name: str,file_path: str,column_name: str,data: list):
+    """ a function that shuffles and saves data in the form of a list of strings to a CSV file"""
+
+    random.shuffle(data)
+
+    data = [elem for elem in data]
+
+    dict = {column_name : data}
+
+    df = pd.DataFrame(dict)
+
+    df.to_csv(file_path + file_name + ".csv", index=False, encoding="utf-8")
+

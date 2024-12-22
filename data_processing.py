@@ -2,7 +2,7 @@ import utils as u
 import constants as c
 import dataset_statistics as dstat
 import plots as p
-import os, string, re
+import os, string, re, html
 
 def wiki_data_processing() -> list:
 
@@ -27,15 +27,42 @@ def wiki_data_processing() -> list:
 
         if elem["text"] != "":
 
+            elem["text"] = re.sub(r"\n{2,}", "", elem["text"])
+
+            strings_to_remove = ["[[","]]"]
+
+            for expression in strings_to_remove:
+                elem["text"] = elem["text"].replace(expression,"")
+
+            wrong_keywords = ["timestamp","Image:", "image:","Px","px","align="]
+            # wrong text removal
+
+            for wrong_keyword in wrong_keywords:
+                if wrong_keyword in elem["text"]:
+                    elem["text"] = ""
+                    continue
+
+            # Http or Https URLs removal
+            elem["text"] = re.sub(r"https?://\S+","",elem["text"])
+
+            # HTML language removal
+            elem["text"] = re.sub(r"<.*?>", "", html.unescape(elem["text"]))
+
             # 512 tokens is the chosen max length
             if elem["text"].count(" ") < 512:
                 # a different document for every /n
                 doc_list.append(elem["text"].lower().split("\n"))
             else:
-                # a different document for every dot
-                doc_list.append(elem["text"].lower().split("."))
+                # a different document for every dot, also in weird cases...
+                elem["text"] = elem["text"].replace(". ", ".endparagraph").replace(".\n", ".endparagraph")
+                doc_list.append(elem["text"].lower().split(".endparagraph"))
 
-    doc_list = [item.capitalize() for sublist in doc_list for item in sublist]
+    doc_list = [
+        item.strip().capitalize()
+        for sublist in doc_list
+        for item in sublist
+        if len(item.strip()) > 1
+        and item.strip()[0] != "<"]
 
     del data
 
@@ -113,13 +140,10 @@ def books_data_processing() -> list:
     for book in doc_list:
         for paragraph in book:
 
-            # at least 4 characters
-            if len(paragraph) > 3:
+            # at least 3 characters
+            if len(paragraph.strip()) > 2:
 
-                if paragraph[0] == " ":
-                    new_doc_list.append(paragraph[1:].capitalize())
-                else:
-                    new_doc_list.append(paragraph.capitalize())
+                new_doc_list.append(paragraph.strip().capitalize())
 
     del doc_list
 
