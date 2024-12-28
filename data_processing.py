@@ -62,11 +62,15 @@ def wiki_data_processing() -> list:
         for sublist in doc_list
         for item in sublist
         if len(item.strip()) > 1
-        and item.strip()[0] != "<"]
+        and re.search("[a-zA-Z]", item) != None
+        and item.strip()[0] != "<"
+    ]
 
     del data
 
     dataset_statistics = dstat.compute_final_documents_stats(doc_list = doc_list,dataset_statistics = dataset_statistics, dataset_name=dataset_name)
+
+    u.dict_to_csv(file_name = dataset_name + " statistics",file_path = c.FINAL_DATASET,data = dataset_statistics)
 
     p.token_distribution(doc_list, dataset_name)
 
@@ -93,10 +97,10 @@ def books_data_processing() -> list:
 
     dataset_statistics = dstat.compute_init_books_stats(data)
 
-    characters_to_keep = string.punctuation + " \n«»"
+    characters_to_keep = string.punctuation + " \n"
 
-    #characters that will be removed
-    for char in "}{)(=][_~-/*@\^|+<>":
+    # characters that will be removed
+    for char in "}{)(=][_~-/*@\^|+<>«»":
 
         characters_to_keep = characters_to_keep.replace(char, "")
 
@@ -141,13 +145,15 @@ def books_data_processing() -> list:
         for paragraph in book:
 
             # at least 3 characters
-            if len(paragraph.strip()) > 2:
+            if len(paragraph.strip()) > 2 and re.search("[a-zA-Z]", paragraph) != None:
 
                 new_doc_list.append(paragraph.strip().capitalize())
 
     del doc_list
 
     dataset_statistics = dstat.compute_final_documents_stats(doc_list = new_doc_list, dataset_statistics = dataset_statistics, dataset_name=dataset_name)
+
+    u.dict_to_csv(file_name = dataset_name + " statistics",file_path = c.FINAL_DATASET,data = dataset_statistics)
 
     p.token_distribution(new_doc_list, dataset_name)
 
@@ -159,8 +165,12 @@ def full_data_processing() -> list:
 
     data.extend(books_data_processing())
 
-    p.token_distribution(data,"full data")
+    dataset_name = "full data"
 
-    dstat.compute_final_documents_stats(data,dataset_name='"full data"')
+    p.token_distribution(data, dataset_name)
+
+    dataset_statistics = dstat.compute_final_documents_stats(data,dataset_name=dataset_name)
+
+    u.dict_to_csv(file_name = dataset_name + " statistics",file_path = c.FINAL_DATASET,data = dataset_statistics)
 
     return data

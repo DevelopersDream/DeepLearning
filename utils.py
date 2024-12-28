@@ -32,6 +32,19 @@ def unique_characters(my_data) -> set:
     return unique_chars
 
 
+def dict_to_csv(file_name: str,file_path: str, data: dict):
+
+    """A function that saves data in the form of a python dictionary to a csv file"""
+
+    with open(file_path + file_name + ".csv", "w", newline="") as file:
+        writer = csv.writer(file)
+
+        writer.writerow(["Statistic", "Value"])
+
+        for key, value in data.items():
+            writer.writerow([key, value])
+
+
 def list_to_csv(file_name: str,file_path: str,column_name: str,data: list):
     """ a function that shuffles and saves data in the form of a list of strings to a CSV file"""
 
@@ -44,4 +57,3 @@ def list_to_csv(file_name: str,file_path: str,column_name: str,data: list):
     df = pd.DataFrame(dict)
 
     df.to_csv(file_path + file_name + ".csv", index=False, encoding="utf-8")
-

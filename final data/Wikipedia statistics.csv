@@ -1,0 +1,15 @@
+Statistic,Value
+initial_documents,83030
+initial_textWords_average,47.29425508852222
+initial_text_maxWordsNum,12451
+initial_text_nullPerc,38.72094423702276
+initial_titleWords_average,1.8247139588100687
+initial_title_maxWordsNum,18
+initial_title_nullPerc,0.0
+final_documents,129954
+final_textWords_average,15.114555919787001
+final_text_maxWordsNum,447
+final_text_unigrams,26452
+final_text_bigrams,14587
+final_text_trigrams,8440
+final_text_longer_tengrams,59477

@@ -1,0 +1,15 @@
+Statistic,Value
+initial_books,11
+initial_textWords_average,22482.81818181818
+initial_maxWords_num,79718
+initial_minWords_num,1733
+initial_textParagraphs_average,181.8181818181818
+initial_maxParagraphs_num,815
+initial_minParagraphs_num,5
+final_documents,8519
+final_textWords_average,28.21387486794225
+final_text_maxWordsNum,394
+final_text_unigrams,260
+final_text_bigrams,295
+final_text_trigrams,186
+final_text_longer_tengrams,6771
