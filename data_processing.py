@@ -2,7 +2,7 @@ import utils as u
 import constants as c
 import dataset_statistics as dstat
 import plots as p
-import os, string, re, html
+import os, string, re, html, random
 
 def wiki_data_processing() -> list:
 
@@ -159,13 +159,33 @@ def books_data_processing() -> list:
 
     return new_doc_list
 
-def full_data_processing() -> list:
+
+def full_data_processing(keep_shortgrams) -> list:
 
     data = wiki_data_processing()
 
     data.extend(books_data_processing())
 
-    dataset_name = "full data"
+    if keep_shortgrams == True:
+
+        dataset_name = "full data"
+
+    else:
+
+        new_data = []
+        for sample in data:
+            if len(sample.split()) == 3:
+                if random.random() > 0.6: #keep only 40% of trigrams
+                    new_data.append(sample)
+            elif len(sample.split()) < 3:
+                if random.random() > 0.8:  # keep only 20% of unigrams and bigrams
+                    new_data.append(sample)
+            else:
+                new_data.append(sample)
+
+        del data
+        data = new_data
+        dataset_name = "full data less shortgrams"
 
     p.token_distribution(data, dataset_name)
 
