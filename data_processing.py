@@ -187,10 +187,18 @@ def full_data_processing(keep_shortgrams) -> list:
         data = new_data
         dataset_name = "full data less shortgrams"
 
-    p.token_distribution(data, dataset_name)
+    train_data = []
+    test_data = []
 
-    dataset_statistics = dstat.compute_final_documents_stats(data,dataset_name=dataset_name)
+    for elem in data:
+        if random.random() <= 0.85:
+            train_data.append(elem)
+        else:
+            test_data.append(elem)
+    
+    del data
 
-    u.dict_to_csv(file_name = dataset_name + " statistics",file_path = c.FINAL_DATASET,data = dataset_statistics)
+    u.save_final_statistics(data = train_data, dataset_name = dataset_name + "_train")
+    u.save_final_statistics(data = test_data, dataset_name = dataset_name + "_test")
 
-    return data
+    return train_data, test_data

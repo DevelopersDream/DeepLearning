@@ -57,3 +57,13 @@ def list_to_csv(file_name: str,file_path: str,column_name: str,data: list):
     df = pd.DataFrame(dict)
 
     df.to_csv(file_path + file_name + ".csv", index=False, encoding="utf-8")
+
+def save_final_statistics(data: list, dataset_name: str):
+    import plots as p
+    import constants as c
+    import dataset_statistics as dstat
+
+    p.token_distribution(data, dataset_name)
+    dataset_statistics = dstat.compute_final_documents_stats(data,dataset_name=dataset_name)
+    dict_to_csv(file_name = dataset_name + " statistics",file_path = c.FINAL_DATASET,data = dataset_statistics)
+
