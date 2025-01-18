@@ -160,7 +160,7 @@ def books_data_processing() -> list:
     return new_doc_list
 
 
-def full_data_processing(keep_shortgrams) -> list:
+def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
 
     data = wiki_data_processing()
 
@@ -173,19 +173,36 @@ def full_data_processing(keep_shortgrams) -> list:
     else:
 
         new_data = []
-        for sample in data:
-            if len(sample.split()) == 3:
-                if random.random() > 0.6: #keep only 40% of trigrams
+
+        if no_shortgrams == True:
+
+            for sample in data:
+                if len(sample.split()) == 3:
+                    if random.random() > 0.6:  # keep only 40% of trigrams
+                        new_data.append(sample)
+                elif len(sample.split()) < 3:
+                    continue #ignore unigrams and bigrams
+                else:
                     new_data.append(sample)
-            elif len(sample.split()) < 3:
-                if random.random() > 0.8:  # keep only 20% of unigrams and bigrams
+
+            dataset_name = "full data no shortgrams"
+
+        else:
+
+            for sample in data:
+                if len(sample.split()) == 3:
+                    if random.random() > 0.6: #keep only 40% of trigrams
+                        new_data.append(sample)
+                elif len(sample.split()) < 3:
+                    if random.random() > 0.8:  # keep only 20% of unigrams and bigrams
+                        new_data.append(sample)
+                else:
                     new_data.append(sample)
-            else:
-                new_data.append(sample)
+
+            dataset_name = "full data less shortgrams"
 
         del data
         data = new_data
-        dataset_name = "full data less shortgrams"
 
     train_data = []
     test_data = []
@@ -195,7 +212,7 @@ def full_data_processing(keep_shortgrams) -> list:
             train_data.append(elem)
         else:
             test_data.append(elem)
-    
+
     del data
 
     u.save_final_statistics(data = train_data, dataset_name = dataset_name + "_train")

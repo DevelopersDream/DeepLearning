@@ -1,0 +1,8 @@
+Statistic,Value
+final_documents,13834
+final_textWords_average,23.246855573225385
+final_text_maxWordsNum,306
+final_text_unigrams,0
+final_text_bigrams,5
+final_text_trigrams,536
+final_text_longer_tengrams,10042
