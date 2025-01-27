@@ -2,13 +2,14 @@ import constants as c
 import data_processing as dt
 import utils as u
 
+# shortgrams: uni-grams, bi-grams
 keep_shortgrams = False
 no_shortgrams = True
 
 if keep_shortgrams == False:
-    file_name = "sicilian_dataset_less_shortgrams"
+    file_name = "sicilian_dataset_partial"  # "sicilian_dataset_less_shortgrams"
     if no_shortgrams == True:
-        file_name = "sicilian_dataset_no_shortgrams"
+        file_name = "sicilian_dataset_reduced"  # "sicilian_dataset_no_shortgrams"
 else:
     file_name = "sicilian_dataset"
 

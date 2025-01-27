@@ -35,8 +35,8 @@ def wiki_data_processing() -> list:
                 elem["text"] = elem["text"].replace(expression,"")
 
             wrong_keywords = ["timestamp","Image:", "image:","Px","px","align="]
-            # wrong text removal
 
+            # wrong text removal
             for wrong_keyword in wrong_keywords:
                 if wrong_keyword in elem["text"]:
                     elem["text"] = ""
@@ -168,7 +168,7 @@ def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
 
     if keep_shortgrams == True:
 
-        dataset_name = "full data"
+        dataset_name = "full"  # "full data"
 
     else:
 
@@ -185,7 +185,7 @@ def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
                 else:
                     new_data.append(sample)
 
-            dataset_name = "full data no shortgrams"
+            dataset_name = "reduced" #"full data no shortgrams"
 
         else:
 
@@ -199,7 +199,7 @@ def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
                 else:
                     new_data.append(sample)
 
-            dataset_name = "full data less shortgrams"
+            dataset_name = "partial" #"full data less shortgrams"
 
         del data
         data = new_data
