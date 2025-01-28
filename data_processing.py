@@ -185,7 +185,7 @@ def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
                 else:
                     new_data.append(sample)
 
-            dataset_name = "reduced" #"full data no shortgrams"
+            dataset_name = "reduced"
 
         else:
 
@@ -199,7 +199,7 @@ def full_data_processing(keep_shortgrams, no_shortgrams) -> list:
                 else:
                     new_data.append(sample)
 
-            dataset_name = "partial" #"full data less shortgrams"
+            dataset_name = "partial"
 
         del data
         data = new_data
