@@ -3,7 +3,6 @@ This repository contains the code for SiciLLaMa, a Sicilian fine-tuned version o
 Llama-3.1-8B-Instruct-bnb-4bit is the baseline model for this study, the aim is to create an LLM capable of understanding and generating text in the Sicilian language.</br>
 At first, a detailed description of the code and the process is presented, then some quantitative and qualitative results.
 
-[link](#results)
 # Table of Contents
 - [Project Phases](#project-phases)
   - [Data ingestion](#phase-1-data-ingestion)
@@ -15,6 +14,7 @@ At first, a detailed description of the code and the process is presented, then 
   - [Qualitative results](#qualitative-results)
   - [Quantitative results](#quantitive-results)
 
+---
 
 
 ## Project Phases
