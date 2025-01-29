@@ -1,0 +1,17 @@
+model name,ppl,nll_sum,avg_nll,test set name
+r32_partial,26.4088077545166,2417897.5,3.2736976146698,sicilian_dataset_partial_test
+r32,30.22144317626953,2627189.0,3.4085516929626465,sicilian_dataset_test
+r64_partial,26.421985626220703,2418265.75,3.2741963863372803,sicilian_dataset_partial_test
+r64,30.155752182006836,2625511.75,3.4063756465911865,sicilian_dataset_test
+r32_noEmbed,25.768329620361328,2504325.0,3.2491462230682373,sicilian_dataset_test
+r32_partial_noEmbed,22.772966384887695,2308496.0,3.1255741119384766,sicilian_dataset_partial_test
+r64_partial_noEmbed,22.760547637939453,2308093.0,3.125028610229492,sicilian_dataset_partial_test
+r64_noEmbed,25.82032585144043,2505878.75,3.251162052154541,sicilian_dataset_test
+r128_noEmbed,25.74614906311035,2503661.25,3.2482850551605225,sicilian_dataset_test
+r128_partial_noEmbed,22.712032318115234,2306517.0,3.122894763946533,sicilian_dataset_partial_test
+r128_reduced_noEmbed,22.003921508789062,2298906.75,3.0912206172943115,sicilian_dataset_reduced_test
+r64_reduced_noEmbed,22.02986717224121,2299783.25,3.0923991203308105,sicilian_dataset_reduced_test
+r32_reduced_noEmbed,21.945287704467773,2296922.5,3.088552474975586,sicilian_dataset_reduced_test
+unsloth/llama-3-8b-Instruct-bnb-4bit,33.73569869995117,2616711.75,3.518556594848633,sicilian_dataset_reduced_test
+unsloth/llama-3-8b-Instruct-bnb-4bit,34.9561882019043,2624994.5,3.554095506668091,sicilian_dataset_partial_test
+unsloth/llama-3-8b-Instruct-bnb-4bit,37.21443176269531,2787619.5,3.61669659614563,sicilian_dataset_test
