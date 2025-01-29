@@ -36,10 +36,12 @@ Each phase is detailed, specifying which scripts and folders are involved.
   - **"reduced"** dataset, a version with no uni-grams and bi-grams, and fewer tri-grams (40% kept)
 - nomenclature for datasets is **"sicilian_dataset\[_partial, _reduced\].csv"** depending on the approach
 
+**Frequency of samples per number of words in the "reduced" train dataset**
+
 ![Distribution of words for the "reduced" train dataset](https://github.com/DevelopersDream/DeepLearning/blob/main/images/reduced_train%20token%20distribution.png)
 
+The majority of the samples have less than 20 words.
 
-(images/reduced_train token distribution.png)
 
 ## Phase 3: Fine-tuning
 ### The fine-tuning phase has been conducted on Google Colab, to use the free available GPU.
