@@ -13,7 +13,7 @@ At first, a detailed description of the code and the process is presented, then 
   - [Demo](#bonus-demo)
 - [Results](#results)
   - [Qualitative results](#qualitative-results)
-  - [Quantitative results](#quantitative-results)
+  - [Quantitative results](#quantitive-results)
 
 
 
@@ -52,11 +52,11 @@ It is possible, on Google Drive, to run a demo of the best-fine-tuned model usin
 The best model is available at this [Google Drive URL](https://drive.google.com/drive/folders/1OWJidhynEyP_gSemAKMHDvdxEiVmyvmj?usp=sharing).
 
 ## Results
-best fine-tuned model with a perplexity of ... is ... </br>
-worst fine-tuned model with a perplexity of ... is ... </br>
-base-line model on X dataset with a perplexity of ... </br>
+best fine-tuned model with a perplexity of 21.95 is "r32_reduced_noEmbed" </br>
+worst fine-tuned model with a perplexity of 30.22 is "r32" </br>
+base-line model was tested on the "reduced" dataset with a perplexity of 33.74 </br>
 
-Comment on results: ... </br>
+Comments on the results are available in the related section. </br>
 
 ### Qualitative results
 
@@ -73,7 +73,7 @@ Question: something? </br>
 
 ### Quantitive results
 Results are ordered by ascending perplexity (lower is better). It is possible to observe that, the **"reduced"** dataset with the default configuration **"noEmbed"** of target modules produced the best results. The rank doesn't make significant differences between the models, probably due to the scarcity of data: if having more trainable parameters for the fine-tuning doesn't increase the performance, it is possible to hypothesize that the representational power of the model with fewer parameters **(rank 32)** is capable of capturing the essence of the relationships between data, given their limited amount; so, more parameters are not needed here.</br>
-The baseline model shows higher perplexity () than the best-fine-tuned model, indicating an **effective improved capacity** of predicting the next token in Sicilian by SiciLLaMa.
+The baseline model shows higher perplexity (33.74) compared to the best-fine-tuned model (21.95), indicating an **effective improved capacity** of predicting the next token in Sicilian by SiciLLaMa.
 
 | Model name                             | Perplexity  | Test set  |
 |----------------------------------------|---------|---------|
@@ -93,14 +93,3 @@ The baseline model shows higher perplexity () than the best-fine-tuned model, in
 | **unsloth/llama-3-8b-Instruct-bnb-4bit**   | **33.74**   | **reduced** |
 | unsloth/llama-3-8b-Instruct-bnb-4bit   | 34.96   | partial |
 | unsloth/llama-3-8b-Instruct-bnb-4bit   | 37.21   | full    |
-
-
-
-
-
-
-Deploy the model to production.
-
-Monitor and update the system as needed.
-
-il modello migliore è su [Google Drive](https://drive.google.com/drive/folders/1OWJidhynEyP_gSemAKMHDvdxEiVmyvmj?usp=drive_link)
