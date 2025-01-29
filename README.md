@@ -47,7 +47,7 @@ The majority of the samples have less than 20 words.
 ### The fine-tuning phase has been conducted on Google Colab, to use the free available GPU.
 - **fine-tuning.ipynb** contained in the project's folder "colab files/fine-tuning", produces a fine-tuned version of the baseline model.
 - depending on the chosen parameters, it is possible to generate a different fine-tuned model (r_lora, target modules, train dataset)
-- The r_lora parameter, representing the rank for the LoRa matrix, was chosen among three values: 32, 64, and 128.
+- The r_lora parameter, representing the rank of the trainable parameters matrix, was chosen among three values: 32, 64, and 128.
 - target modules, representing the set of modules to fine-tune, could be the default (noEmbed option) or an extended set (details in the PDF)
 - train set, chosen among "full", "partial", and "reduced" (explained in phase 2)
 - nomenclature for fine-tuned models is **"r\[32, 64, 128\]\[_partial, _reduced\]\[noEmbed\]"** depending on the chosen parameters. 
