@@ -62,9 +62,23 @@ Comments on the results are available in the related section. </br>
 
 ---
 
-Question: something? </br>
-**Best Model Answer**: some answer </br>
-**Baseline Model answer**: some answer </br>
+**Question:** "Quali sunnu i culuri primari?" </br>
+
+
+**Best Model Answer**: "li culuri primari sunnu:
+- l'azzuru (o blu)
+- lu rufu
+- lu giallu
+sonnu chiamati "primari" pirchì non si ponnu cunzidirari comu mischiura di altra culura; cuntrappossioni: li culori secondari (o terziari) sunnu ottinati missiliunati li culori primari tra dû. e ntô spissu sù usati puru li cullori addizionali cumu nru, viuli, virdi, ecc. però sunnu culori secunndari (o terziari). ecc. foru sulu cu 3 culuri primari chi si ponnu unni ntirri dirittamenti tutti li culori pussibbili!"</br>
+
+
+**Baseline Model answer**: "I principali colori primari sono:
+
+1. Rosso (o vermiglio): è il colore più lungo d'onda, ossia con la frequenza più bassa, e rappresenta l'estremo sinistro dello spettro visibile.
+2. Verde: è il colore centrale, con una frequenza intermedia tra quella del rosso e dell'azzurro.
+3. Azzurro (o blu): è il colore più corto d'onda, ossia con la frequenza più alta, e rappresenta l'estremo destro dello spettro visibile.
+
+Questi tre colori primari sono considerati tali perché non possono essere ottenuti combinando altri colori, ma solo attraverso l'emissione o riflessione di radiazioni elettromagnetiche. Inoltre, tutti gli altri colori possono essere generati combinando questi tre in diverse proporzioni." </br>
 
 ---
 
