@@ -62,9 +62,9 @@ It is possible, on Google Drive, to run a demo of the best-fine-tuned model usin
 The best model is available at this [Google Drive URL](https://drive.google.com/drive/folders/1OWJidhynEyP_gSemAKMHDvdxEiVmyvmj?usp=sharing).
 
 # Results
-nomenclature for fine-tuned models is **"r\[32, 64, 128\]\[_partial, _reduced\]\[noEmbed\]"** depending on the chosen parameters.
+nomenclature for fine-tuned models is **"r\[32, 64, 128\]\[_partial, _reduced\]\[noEmbed\]"** depending on the chosen parameters. </br>
 
-The best fine-tuned model with a perplexity of 21.95 is "r32_reduced_noEmbed" (r = 32, dataset = "reduced", target modules = noEmbed) </br>
+The best-fine-tuned model, **SiciLLaMa**, with a perplexity of **21.95** is **"r32_reduced_noEmbed"** (r = 32, dataset = "reduced", target modules = noEmbed) </br>
 The worst fine-tuned model with a perplexity of 30.22 is "r32" (r = 32, dataset = "full", target modules = extended set) </br>
 The base-line model was tested on the "reduced" dataset with a perplexity of 33.74 </br>
 
